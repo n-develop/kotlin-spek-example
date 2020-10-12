@@ -1,0 +1,40 @@
+buildscript {
+    // use specific Kotlin version
+    ext.kotlin_version = '1.4.10'
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+    id 'application'
+}
+group = 'me.lrichter'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    jcenter()
+}
+dependencies {
+    // include Kotlin standard library
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+    // include JUnit 5 assertions
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
+    testImplementation 'org.spekframework.spek2:spek-dsl-jvm:2.0.13'
+    // include JUnit 5 test engine
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
+    testRuntimeOnly 'org.spekframework.spek2:spek-runner-junit5:2.0.13'
+}
+test {
+    useJUnitPlatform {
+        includeEngines 'spek2'
+    }
+}
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = '13'
+    }
+}
+application {
+    mainClassName = 'MainKt'
+}
